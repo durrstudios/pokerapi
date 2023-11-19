@@ -2,8 +2,8 @@ var betButton;
 var bet = 0;
 var recentAction;
 // EDIT THESE
-const playersAPI = 'https://pokerapi.darwincereska.repl.co/api/players/'
-const betAPI = 'https://pokerapi.darwincereska.repl.co/api/bets/'
+const playersAPI = 'https://pokerapi.darwincereska.repl.co' + "/api/players/"
+const betAPI = 'https://pokerapi.darwincereska.repl.co' + "/api/bets/"
 
 // 
 
@@ -77,33 +77,33 @@ const playerNames = [];
 
 // Fetch Players
 fetch(playersAPI)
-    .then(response => response.json())
-    .then(data => {
+  .then(response => response.json())
+  .then(data => {
 
-      console.log('Received data:')
-      console.log(data);
-      for (let i = 0; i < data.length; i++) {
-          // Access the 'name' property of each data object and push 
-          // it to the playerNames array
-          playerNames.push(data[i].name);
-      }
+    console.log('Received data:')
+    console.log(data);
+    for (let i = 0; i < data.length; i++) {
+      // Access the 'name' property of each data object and push 
+      // it to the playerNames array
+      playerNames.push(data[i].name);
+    }
 
-      console.log(playerNames)
+    console.log(playerNames)
 
-//   TO CHANGE STARTING NUMBERS EDIT HERE DEFAULT 50
-      makePlayers()
+    //   TO CHANGE STARTING NUMBERS EDIT HERE DEFAULT 50
+    makePlayers()
 
-//   
-
-
+    //   
 
 
-  allBALANCE()
-      wipeAPIBets()
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
+
+
+    allBALANCE()
+    wipeAPIBets()
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
 
 
 
@@ -140,7 +140,7 @@ function checkAndPlaceBet() {
           previousData = { name: data.name, bet: data.bet, id: data.id };
 
           // Run the place_bet function with the new values
-          BET(data.name,int(data.bet))
+          BET(data.name, int(data.bet))
         } else {
           console.log('Data has not changed.');
         }
@@ -182,23 +182,23 @@ function setup() {
 
   createCanvas(canvasDimentions, canvasDimentions);
   betNameInput = createInput()
-  betNameInput.size(50,15)
-  betNameInput.attribute('placeholder','Name')
+  betNameInput.size(50, 15)
+  betNameInput.attribute('placeholder', 'Name')
   betNumInput = createInput()
-  betNumInput.size(50,15)
-  betNumInput.attribute('placeholder','Amount')
+  betNumInput.size(50, 15)
+  betNumInput.attribute('placeholder', 'Amount')
   betButton = createButton('Bet');
   betButton.mousePressed(BETBUTTON);
   winInput = createInput()
   winInput.position(200,)
-  winInput.size(50,15)
-  winInput.attribute('placeholder','Name')
+  winInput.size(50, 15)
+  winInput.attribute('placeholder', 'Name')
   winButton = createButton("Win")
-  winButton.position(250, )
+  winButton.position(250,)
   winButton.mousePressed(WINBUTTON)
 
   showBalanceButton = createButton('Show Balances')
-  showBalanceButton.position((canvasDimentions /1.27) ,)
+  showBalanceButton.position((canvasDimentions / 1.27),)
   showBalanceButton.mousePressed(allBALANCE)
 
 
@@ -207,17 +207,17 @@ function setup() {
 
 
 function draw() {
-  background(53,101,77);
+  background(53, 101, 77);
   strokeWeight(4)
   drawingContext.setLineDash([5, 10]);
-  stroke(255,0,0)
+  stroke(255, 0, 0)
   line(0, 70, canvasDimentions, 70);
   drawingContext.setLineDash([5, 10]);
   stroke(255)
   line(8, 70, canvasDimentions, 70);
 
   drawingContext.setLineDash([5, 10]);
-  stroke(255,0,0)
+  stroke(255, 0, 0)
   line(8, 5, canvasDimentions, 5);
   drawingContext.setLineDash([5, 10]);
   stroke(255)
@@ -230,11 +230,11 @@ function draw() {
   strokeWeight(2);
   text(`Recent Action: ${recentAction}`, 10, 450);
   textSize(25)
-  text(`BETS: $${bet}`, 10 , 50)
+  text(`BETS: $${bet}`, 10, 50)
   textSize(15)
-  text(`Players: ${playerNames}`,10, 100)
+  text(`Players: ${playerNames}`, 10, 100)
   textSize(16)
-  text(`Player Balances:   ${allBALANCE()}`,10,150)
+  text(`Player Balances:   ${allBALANCE()}`, 10, 150)
 
 
 }
@@ -243,7 +243,7 @@ function draw() {
 
 
 
-function BETBUTTON(name, amount = 50){
+function BETBUTTON(name, amount = 50) {
   name = betNameInput.value()
   amount = int(betNumInput.value())
 
@@ -260,7 +260,7 @@ function makePlayers(balance = 1000) {
   // Create players for each name in the array
   playerNames.forEach(name => {
     players[name] = new Player(name, balance); // You can set an initial balance for all players if needed
-});
+  });
   PLAYERS()
 }
 
@@ -268,7 +268,7 @@ function PLAYERS() {
   console.log(players)
 }
 // Win and Bet functions
-function WIN(player,amount = bet) {
+function WIN(player, amount = bet) {
   players[player].win(amount);
   allBALANCE()
 }
@@ -285,8 +285,8 @@ function BALANCE(player) {
 function allBALANCE() {
   let allBalances = '';
   console.log('___________________________')
-  playerNames.forEach(name =>  {
-    console.log(players[name].name,`$${players[name].balance}`)
+  playerNames.forEach(name => {
+    console.log(players[name].name, `$${players[name].balance}`)
     allBalances += `\n\n${players[name].name}:       $${players[name].balance}`;
   })
   console.log('___________________________')
@@ -294,7 +294,7 @@ function allBALANCE() {
   return allBalances
 }
 // 
-function DEPOSIT(player,amount) {
+function DEPOSIT(player, amount) {
   players[player].deposit(amount);
 }
 function wipeAPIBets() {
@@ -302,9 +302,9 @@ function wipeAPIBets() {
     method: "DELETE", // Use the appropriate HTTP method
     headers: {
       "Content-Type": "application/json",
-                        // Add any necessary authentication headers here
-     },
-                    // Include any necessary data in the request body
-                    // body: JSON.stringify({ /* data */ }),
+      // Add any necessary authentication headers here
+    },
+    // Include any necessary data in the request body
+    // body: JSON.stringify({ /* data */ }),
   })
 }

@@ -7,7 +7,7 @@ var cors = require('cors');
 app.use(cors())
 // In-memory array to store data
 let playerArray = [
-  
+
 ];
 let betArray = [{
   name: "",
@@ -49,7 +49,7 @@ app.get('/api/bets', (req, res) => {
 // POST endpoint to add an item to the array
 app.post('/api/bets', (req, res) => {
   const newBetPlayer = req.body;
-  
+
 
   // Add a unique ID to the new item
 
@@ -58,13 +58,14 @@ app.post('/api/bets', (req, res) => {
   res.status(201).json(newBetPlayer);
 });
 
-app.delete('/api/bets', (req,res) => {
+app.delete('/api/bets', (req, res) => {
   betArray = [{
-      name: "",
-      bet: 0,
-      id: 0
-    }]
-  res.json({message: 'Bets wiped'
+    name: "",
+    bet: 0,
+    id: 0
+  }]
+  res.json({
+    message: 'Bets wiped'
   })
 })
 
