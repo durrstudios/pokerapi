@@ -4,84 +4,146 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Darwin's Poker ||| Bet</title>
-</head>
-<body>
-  <form id="myForm" onsubmit="submitForm(event)">
-      <label for="textInput">NAME:</label>
-      <input type="text" id="textInput" name="name" required>
-      <label>BET:</label>
-      <input type="number" id="numberInput" name="number" value='10'>
-
-      <br>
-
-      <input type="submit" value="Submit">
-  </form>
-
-  <div id="result"></div>
-
-  <script>
-    function makeid(length) {
-        let result = '';
-        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        const charactersLength = characters.length;
-        let counter = 0;
-        while (counter < length) {
-          result += characters.charAt(Math.floor(Math.random() * charactersLength));
-          counter += 1;
-        }
-        return result;
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      background-color: #2ecc71; /* Green background color */
+      color: #ffffff; /* White text color */
     }
 
-    console.log(makeid(5))
-      function submitForm(event) {
-          // Prevent the default form submission
-          event.preventDefault();
+    .poker-table {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 2px solid #ffffff;
+      border-radius: 10px;
+      background-color: #2c3e50; /* Dark background color */
+    }
 
-          // Get the value from the input field
-          var inputValue = document.getElementById("textInput").value;
-          var inputNumber = document.getElementById("numberInput").value;
-          var makeID = 'makeid'
-          var generateID = eval(`${makeID}(12)`);
-          // Create a JSON object
-          var jsonData = {
-              "name": inputValue,
-              "bet" : inputNumber,
-              "id" : makeid(12)
-          };
+    .form-group {
+      margin-bottom: 15px;
+    }
 
-          // Send the data to the server using fetch
-          fetch("/api/bets", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify(jsonData)
-          })
-          .then(response => response.json())
-          .then(data => {
-              // Display a message on successful response
-              document.getElementById("result").innerHTML = "Posted successfully!";
-              console.log(data);
-          })
-          .catch(error => {
-              // Display an error message on failure
-              document.getElementById("result").innerHTML = "Error posting data.";
-              console.error("Error:", error);
-          });
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+      border: 1px solid #ffffff;
+      border-radius: 5px;
+      background-color: #34495e; /* Input field color */
+      color: #ffffff; /* Input text color */
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      border: none;
+      border-radius: 5px;
+      background-color: #e74c3c; /* Red submit button color */
+      color: #ffffff; /* Text color on submit button */
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 10px;
+      border-radius: 5px;
+      background-color: #3498db; /* Blue result box color */
+    }
+  </style>
+</head>
+<body>
+  <div class="container poker-table">
+    <form id="myForm" onsubmit="submitForm(event)">
+      <div class="form-group">
+        <label for="textInput">NAME:</label>
+        <input type="text" id="textInput" name="name" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label>BET:</label>
+        <input type="number" id="numberInput" name="number" class="form-control" value="10" min='0'>
+      </div>
+      <input type="submit" value="Submit" class="btn btn-danger">
+    </form>
+
+    <div id="result" class="mt-3"></div>
+  </div>
+
+  <!-- Bootstrap JS and Popper.js -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+      function makeid(length) {
+          let result = '';
+          const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+          const charactersLength = characters.length;
+          let counter = 0;
+          while (counter < length) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            counter += 1;
+          }
+          return result;
       }
+
+      console.log(makeid(5))
+        function submitForm(event) {
+            // Prevent the default form submission
+            event.preventDefault();
+
+            // Get the value from the input field
+            var inputValue = document.getElementById("textInput").value;
+            var inputNumber = document.getElementById("numberInput").value;
+            var makeID = 'makeid'
+            var generateID = eval(`${makeID}(12)`);
+            // Create a JSON object
+            var jsonData = {
+                "name": inputValue,
+                "bet" : inputNumber,
+                "id" : makeid(12)
+            };
+
+            // Send the data to the server using fetch
+            fetch("/api/bets", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(jsonData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Display a message on successful response
+                document.getElementById("result").innerHTML = "Posted successfully!";
+                console.log(data);
+            })
+            .catch(error => {
+                // Display an error message on failure
+                document.getElementById("result").innerHTML = "Error posting data.";
+                console.error("Error:", error);
+            });
+        }
+    </script>
+
+  <script>
+    // Using Fetch to interact with the Node.js API
+    fetch('/api/bets')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
   </script>
-
-<script>
-  // Using Fetch to interact with the Node.js API
-  fetch('/api/bets')
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-</script>
-
 </body>
 </html>

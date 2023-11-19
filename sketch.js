@@ -117,6 +117,7 @@ console.log('All balance is running')
 // Function to check the API for new data and place a bet
 // Store the previous data to compare
 let previousData = {};
+let previousPlayers = {};
 
 // Function to check the API for new data and place a bet
 function checkAndPlaceBet() {
@@ -158,10 +159,6 @@ function checkAndPlaceBet() {
 setInterval(checkAndPlaceBet, 5000);
 
 
-// Set up a timer to periodically check for new data (e.g., every 5 seconds)
-setInterval(checkAndPlaceBet, 5000);
-
-
 
 
 
@@ -193,15 +190,15 @@ function setup() {
   betButton = createButton('Bet');
   betButton.mousePressed(BETBUTTON);
   winInput = createInput()
-  winInput.position(200,canvasDimentions)
+  winInput.position(200,)
   winInput.size(50,15)
   winInput.attribute('placeholder','Name')
   winButton = createButton("Win")
-  winButton.position(250, canvasDimentions)
+  winButton.position(250, )
   winButton.mousePressed(WINBUTTON)
 
   showBalanceButton = createButton('Show Balances')
-  showBalanceButton.position((canvasDimentions /1.27) ,canvasDimentions)
+  showBalanceButton.position((canvasDimentions /1.27) ,)
   showBalanceButton.mousePressed(allBALANCE)
 
 
@@ -233,7 +230,7 @@ function draw() {
   strokeWeight(2);
   text(`Recent Action: ${recentAction}`, 10, 450);
   textSize(25)
-  text(`BETS: ${bet}`, 10 , 50)
+  text(`BETS: $${bet}`, 10 , 50)
   textSize(15)
   text(`Players: ${playerNames}`,10, 100)
   textSize(16)
@@ -249,7 +246,7 @@ function draw() {
 function BETBUTTON(name, amount = 50){
   name = betNameInput.value()
   amount = int(betNumInput.value())
-  BET(name, amount)
+
 
 
 }
