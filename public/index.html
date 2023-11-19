@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Darwin's Poker</title>
+</head>
+<body>
+  <h1>Darwin's Poker</h1>
+  <a href='/../name/'>Register Name</a>
+  <br>
+  <a href='/../bet'>Place Bets</a>
+  
+
+<script>
+  // Using Fetch to interact with the Node.js API
+  fetch('https://pokerapi.darwincereska.repl.co/api/players')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+</script>
+
+</body>
+</html>

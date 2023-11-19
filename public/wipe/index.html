@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Wipe Button</title>
+</head>
+<body>
+
+    <button onclick="wipeAPI()">Wipe API</button>
+
+    <script>
+        function wipeAPI() {
+            // Ensure the user wants to proceed
+            var confirmed = confirm("Are you sure you want to wipe the entire API?");
+
+            if (confirmed) {
+                // Send a request to the API endpoint to perform the action
+                fetch("/api/players", {
+                    method: "DELETE", // Use the appropriate HTTP method
+                    headers: {
+                        "Content-Type": "application/json",
+                        // Add any necessary authentication headers here
+                    },
+                    // Include any necessary data in the request body
+                    // body: JSON.stringify({ /* data */ }),
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("API wiped successfully!");
+                    } else {
+                        alert("Error wiping API. Check console for details.");
+                        console.error("Error:", response);
+                    }
+                })
+                .catch(error => {
+                    alert("Error wiping API. Check console for details.");
+                    console.error("Error:", error);
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>
