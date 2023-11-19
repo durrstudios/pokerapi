@@ -1,8 +1,15 @@
 var betButton;
 var bet = 0;
 var recentAction;
+// EDIT THESE
+const playersAPI = 'https://pokerapi.darwincereska.repl.co/api/players/'
+const betAPI = 'https://pokerapi.darwincereska.repl.co/api/bets/'
 
-const playersAPI = 'https://pokerapi.darwincereska.repl.co/api/players'
+// 
+
+
+
+
 
 
 const canvasDimentions = 500;
@@ -68,7 +75,7 @@ const players = {};
 // EDIT HERE
 const playerNames = [];
 
-
+// Fetch Players
 fetch(playersAPI)
     .then(response => response.json())
     .then(data => {
@@ -82,8 +89,17 @@ fetch(playersAPI)
       }
 
       console.log(playerNames)
+
+//   TO CHANGE STARTING NUMBERS EDIT HERE DEFAULT 50
       makePlayers()
-      allBALANCE()
+
+//   
+
+
+
+
+  allBALANCE()
+      wipeAPIBets()
     })
     .catch(error => {
       console.error('Error:', error);
@@ -97,6 +113,59 @@ console.log('All balance is running')
 
 
 // TEST HERE
+
+// Function to check the API for new data and place a bet
+// Store the previous data to compare
+let previousData = {};
+
+// Function to check the API for new data and place a bet
+function checkAndPlaceBet() {
+  // Replace 'apiEndpoint' with the actual API endpoint of the site
+  const apiEndpoint = betAPI;
+
+  // Make a GET request to the API
+  fetch(apiEndpoint)
+    .then(response => response.json())
+    .then(data => {
+      // Check if there is new data
+      if (data && data.name && data.bet && data.id) {
+        // Compare with the previous data
+        if (
+          data.name !== previousData.name ||
+          data.bet !== previousData.bet ||
+          data.id !== previousData.id
+        ) {
+          // Store the new data for future comparison
+          previousData = { name: data.name, bet: data.bet, id: data.id };
+
+          // Run the place_bet function with the new values
+          BET(data.name,int(data.bet))
+        } else {
+          console.log('Data has not changed.');
+        }
+      } else {
+        console.log('No new data found.');
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+}
+
+// Function to place a be
+
+// Set up a timer to periodically check for new data (e.g., every 5 seconds)
+setInterval(checkAndPlaceBet, 5000);
+
+
+// Set up a timer to periodically check for new data (e.g., every 5 seconds)
+setInterval(checkAndPlaceBet, 5000);
+
+
+
+
+
+
 
 
 
@@ -214,4 +283,15 @@ function allBALANCE() {
 // 
 function DEPOSIT(player,amount) {
   players[player].deposit(amount);
+}
+function wipeAPIBets() {
+  fetch(betAPI, {
+    method: "DELETE", // Use the appropriate HTTP method
+    headers: {
+      "Content-Type": "application/json",
+                        // Add any necessary authentication headers here
+     },
+                    // Include any necessary data in the request body
+                    // body: JSON.stringify({ /* data */ }),
+  })
 }
