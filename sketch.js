@@ -12,7 +12,7 @@ const betAPI = 'https://pokerapi.darwincereska.repl.co/api/bets/'
 
 
 
-const canvasDimentions = 500;
+const canvasDimentions = 600;
 
 class Player {
   constructor(name, initialBalance = 0) {
@@ -210,17 +210,33 @@ function setup() {
 
 
 function draw() {
-  background(220);
-  textSize(11);
+  background(53,101,77);
+  strokeWeight(4)
+  drawingContext.setLineDash([5, 10]);
+  stroke(255,0,0)
+  line(0, 70, canvasDimentions, 70);
+  drawingContext.setLineDash([5, 10]);
+  stroke(255)
+  line(8, 70, canvasDimentions, 70);
+
+  drawingContext.setLineDash([5, 10]);
+  stroke(255,0,0)
+  line(8, 5, canvasDimentions, 5);
+  drawingContext.setLineDash([5, 10]);
+  stroke(255)
+  line(0, 5, canvasDimentions, 5);
+
+
+  textSize(13);
   fill(255);
   stroke(0);
   strokeWeight(2);
-  text(`Recent Action: ${recentAction}`, 10, 350);
+  text(`Recent Action: ${recentAction}`, 10, 450);
   textSize(25)
   text(`BETS: ${bet}`, 10 , 50)
   textSize(15)
   text(`Players: ${playerNames}`,10, 100)
-  textSize(12)
+  textSize(16)
   text(`Player Balances:   ${allBALANCE()}`,10,150)
 
 
