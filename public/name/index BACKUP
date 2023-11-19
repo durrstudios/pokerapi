@@ -1,68 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Darwin's Poker ||| Name</title>
-</head>
-<body>
-  <form id="myForm" onsubmit="submitForm(event)">
-      <label for="textInput">NAME:</label>
-      <input type="text" id="textInput" name="name" required>
-
-      <br>
-
-      <input type="submit" value="Submit">
-  </form>
-
-  <div id="result"></div>
-
-  <script>
-      function submitForm(event) {
-          // Prevent the default form submission
-          event.preventDefault();
-
-          // Get the value from the input field
-          var inputValue = document.getElementById("textInput").value;
-
-          // Create a JSON object
-          var jsonData = {
-              "name": inputValue
-          };
-
-          // Send the data to the server using fetch
-          fetch("/api/players", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json"
-              },
-              body: JSON.stringify(jsonData)
-          })
-          .then(response => response.json())
-          .then(data => {
-              // Display a message on successful response
-              document.getElementById("result").innerHTML = "Posted successfully!";
-              console.log(data);
-          })
-          .catch(error => {
-              // Display an error message on failure
-              document.getElementById("result").innerHTML = "Error posting data.";
-              console.error("Error:", error);
-          });
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darwin's Poker ||| Name</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+      body {
+        background-color: #3498db;
+        /* Blue background color */
+        color: #ffffff;
+        /* White text color */
       }
-  </script>
 
-<script>
-  // Using Fetch to interact with the Node.js API
-  fetch('https://pokerapi.darwincereska.repl.co/api/players')
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-</script>
+      .name-form {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 2px solid #ffffff;
+        border-radius: 10px;
+        background-color: #2980b9;
+        /* Dark blue background color */
+      }
 
-</body>
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ffffff;
+        border-radius: 5px;
+        background-color: #2c3e50;
+        /* Dark background color */
+        color: #ffffff;
+        /* Text color on input field */
+      }
+
+      input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border: none;
+        border-radius: 5px;
+        background-color: #e74c3c;
+        /* Red submit button color */
+        color: #ffffff;
+        /* Text color on submit button */
+        cursor: pointer;
+      }
+
+      #result {
+        margin-top: 20px;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #34495e;
+        /* Dark gray result box color */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container name-form">
+      <form id="myForm" onsubmit="submitForm(event)">
+        <div class="form-group">
+          <label for="textInput">NAME:</label>
+          <input type="text" id="textInput" name="name" class="form-control" required>
+        </div>
+        <input type="submit" value="Submit" class="btn btn-danger">
+      </form>
+      <div id="result" class="mt-3"></div>
+    </div>
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      function submitForm(event) {
+        // Prevent the default form submission
+        event.preventDefault();
+
+        // Get the value from the input field
+        var inputValue = document.getElementById("textInput").value;
+
+        // Create a JSON object
+        var jsonData = {
+          "name": inputValue
+        };
+
+        // Send the data to the server using fetch
+        fetch("/api/players", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(jsonData)
+        }).then(response => response.json()).then(data => {
+          // Display a message on successful response
+          document.getElementById("result").innerHTML = "Posted successfully!";
+          console.log(data);
+
+          // Hide the message after two seconds
+          setTimeout(function () {
+            document.getElementById("result").innerHTML = "";
+          }, 2000);
+        }).catch(error => {
+          // Display an error message on failure
+          document.getElementById("result").innerHTML = "Error posting data.";
+          console.error("Error:", error);
+        });
+      }
+
+    </script>
+    <script>
+      // Using Fetch to interact with the Node.js API
+      fetch('https://pokerapi.darwincereska.repl.co/api/players').then(response => response.json()).then(data => {
+        console.log(data);
+      }).catch(error => {
+        console.error('Error:', error);
+      });
+    </script>
+  </body>
 </html>

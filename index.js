@@ -75,6 +75,22 @@ app.delete('/api/players', (req, res) => {
   res.json({ message: 'API wiped successfully!' });
 })
 
+app.get('/sketch.js', function (req, res) {
+const options = {
+    root: path.join(__dirname)
+};
+
+const fileName = '/public/sketch.txt';
+res.sendFile(fileName, options, function (err) {
+    if (err) {
+        next(err);
+    } else {
+        console.log('Sent:', fileName);
+    }
+});
+});
+
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });

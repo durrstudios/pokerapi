@@ -86,12 +86,15 @@
       function submitForm(event) {
         // Prevent the default form submission
         event.preventDefault();
+
         // Get the value from the input field
         var inputValue = document.getElementById("textInput").value;
+
         // Create a JSON object
         var jsonData = {
           "name": inputValue
         };
+
         // Send the data to the server using fetch
         fetch("/api/players", {
           method: "POST",
@@ -103,12 +106,18 @@
           // Display a message on successful response
           document.getElementById("result").innerHTML = "Posted successfully!";
           console.log(data);
+
+          // Hide the message after two seconds
+          setTimeout(function () {
+            document.getElementById("result").innerHTML = "";
+          }, 2000);
         }).catch(error => {
           // Display an error message on failure
           document.getElementById("result").innerHTML = "Error posting data.";
           console.error("Error:", error);
         });
       }
+
     </script>
     <script>
       // Using Fetch to interact with the Node.js API

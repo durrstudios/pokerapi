@@ -1,22 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Darwin's Poker</title>
-  </head>
-  <body>
-    <h1>Darwin's Poker</h1>
-    <a href='/../name/'>Register Name</a>
-    <br>
-    <a href='/../bet'>Place Bets</a>
-    <script>
-      // Using Fetch to interact with the Node.js API
-      fetch('https://pokerapi.darwincereska.repl.co/api/players').then(response => response.json()).then(data => {
-        console.log(data);
-      }).catch(error => {
-        console.error('Error:', error);
-      });
-    </script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Darwin's Poker</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    h1 {
+      color: #007bff;
+    }
+
+    .btn-custom {
+      background-color: #28a745;
+      color: #ffffff;
+      border: 2px solid #28a745;
+    }
+
+    .btn-custom:hover {
+      background-color: #218838;
+      border: 2px solid #218838;
+    }
+  </style>
+</head>
+<body class="container mt-5">
+
+  <h1 class="mb-4">Darwin's Poker</h1>
+
+  <a href='/../name/' class="btn btn-custom mb-2">Register Name</a>
+  <br>
+  <a href='/../bet' class="btn btn-custom mb-2">Place Bets</a>
+  <br>
+  <a href='/../sketch.js' class="btn btn-custom mb-2">Sketch.js</a>
+
+  <script>
+    // Using Fetch to interact with the Node.js API
+    fetch('https://pokerapi.darwincereska.repl.co/api/players').then(response => response.json()).then(data => {
+      console.log(data);
+    }).catch(error => {
+      console.error('Error:', error);
+    });
+  </script>
+
+  <!-- Bootstrap JS (optional, if you need it for certain components) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
