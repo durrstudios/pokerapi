@@ -5,6 +5,9 @@ var actionsLog = "";
 // EDIT THESE
 const playersAPI = 'https://pokerapi.darwincereska.repl.co' + "/api/players/"
 const betAPI = 'https://pokerapi.darwincereska.repl.co' + "/api/bets/"
+const checkSeconds = 5
+// 
+const checkRefresh = (checkSeconds * 1000);
 const canvasDimentions = 500;
 class Player {
     constructor(name, initialBalance = 0) {
@@ -61,30 +64,19 @@ const playerNames = [];
 fetch(playersAPI)
     .then(response => response.json())
     .then(data => {
-
-        console.log('Received data:')
+        console.log('Received data:');
         console.log(data);
-        for (let i = 0; i < data.length; i++) {
-            // Access the 'name' property of each data object and push 
-            // it to the playerNames array
-            playerNames.push(data[i].name);
-        }
-        console.log(playerNames)
-
-        //   TO CHANGE STARTING NUMBERS EDIT HERE DEFAULT 50
-        makePlayers(10000)
-        wipeAPIBets()
+        playerNames.push(...data.map(player => player.name));
+        console.log(playerNames);
+        makePlayers();
+        wipeAPIBets();
     })
     .catch(error => {
         console.error('Error:', error);
     });
+
 console.log('All balance is running')
 // TEST HERE
-// Function to check the API for new data and place a bet
-// Store the previous data to compare
-let previousData = {};
-let previousPlayers = {};
-
 // Function to check the API for new data and place a bet
 function checkAndPlaceBet() {
     // Replace 'apiEndpoint' with the actual API endpoint of the site
@@ -95,7 +87,7 @@ function checkAndPlaceBet() {
         .then(response => response.json())
         .then(data => {
             // Check if there is new data
-            if (data && data.length > 0) {
+            if (data?.length > 0) {
                 // Run the place_bet function with the new values
 
                 for (i = 0; i < data.length; i++) {
@@ -114,31 +106,17 @@ function checkAndPlaceBet() {
 // Function to place a be
 
 // Set up a timer to periodically check for new data (e.g., every 5 seconds)
-setInterval(checkAndPlaceBet, 20000);
+setInterval(checkAndPlaceBet, checkRefresh);
 // Create players from the array
 // const players = playerNames.map(name => new Player(name));
 function setup() {
-
-    createCanvas(canvasDimentions, canvasDimentions);
-    betNameInput = createInput()
-    betNameInput.size(50, 15)
-    betNameInput.attribute('placeholder', 'Name')
-    betNumInput = createInput()
-    betNumInput.size(50, 15)
-    betNumInput.attribute('placeholder', 'Amount')
-    betButton = createButton('Bet');
-    betButton.mousePressed(BETBUTTON);
-    winInput = createInput()
-    winInput.position(200, )
-    winInput.size(50, 15)
-    winInput.attribute('placeholder', 'Name')
-    winButton = createButton("Win")
-    winButton.position(250, )
-    winButton.mousePressed(WINBUTTON)
-
-    showBalanceButton = createButton('Show Balances')
-    showBalanceButton.position((canvasDimentions / 1.27), )
-    showBalanceButton.mousePressed(allBALANCE)
+createCanvas(canvasDimentions, canvasDimentions);
+    betNameInput = createInput().size(50, 15).attribute('placeholder', 'Name');
+    betNumInput = createInput().size(50, 15).attribute('placeholder', 'Amount');
+betButton = createButton('Bet').mousePressed(BETBUTTON);
+    winInput = createInput().position(200).size(50, 15).attribute('placeholder', 'Name')
+    winButton = createButton("Win").position(250, ).mousePressed(WINBUTTON)
+  showBalanceButton = createButton('Show Balances').position((canvasDimentions / 1.27), ).mousePressed(allBALANCE)
 
 
 
