@@ -9,11 +9,8 @@ app.use(cors())
 let playerArray = [
 
 ];
-let betArray = [{
-  name: "",
-  bet: 0,
-  id: 0
-}]
+let lastReadBetIndex = 0
+let betArray = []
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -34,16 +31,15 @@ app.post('/api/players', (req, res) => {
 });
 
 app.get('/api/bets', (req, res) => {
-  // Simulating dynamic data from the array; replace this with your logic
-  const randomIndex = betArray.length;
-  const { name, bet, id } = betArray[randomIndex - 1];
+  //return all bets since last read
+  let startRead = lastReadBetIndex
+  let endRead = betArray.length
+  lastReadBetIndex = endRead
+
+  console.log(startRead, endRead)
 
   // Sending the data as JSON
-  res.json({
-    name: name,
-    bet: bet,
-    id: id
-  });
+  res.json(betArray.slice(startRead, endRead));
 });
 
 // POST endpoint to add an item to the array
