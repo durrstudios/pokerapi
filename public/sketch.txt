@@ -3,8 +3,8 @@ var bet = 0;
 var recentAction = [];
 var actionsLog = "";
 // EDIT THESE
-const playersAPI = 'https://pokerapidev.darwincereska.repl.co' + "/api/players/"
-const betAPI = 'https://pokerapidev.darwincereska.repl.co' + "/api/bets/"
+const playersAPI = 'https://pokerapi.darwincereska.repl.co' + "/api/players/"
+const betAPI = 'https://pokerapi.darwincereska.repl.co' + "/api/bets/"
 const canvasDimentions = 500;
 class Player {
     constructor(name, initialBalance = 0) {
